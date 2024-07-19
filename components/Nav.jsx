@@ -35,9 +35,9 @@ const Nav = () => {
         <p className="logo_text">Promptopia</p>
       </Link>
 
+      {providers ? console.log(Object.values(providers)) : ""}
 
-      {alert(providers)}
-      {/* Mobile Navigation */}
+      {/* Desktop Navigation */}
       <div className="sm:flex hidden">
         {session?.user ? (
           <div className="flex gap-3 md:gap-5">
@@ -63,7 +63,7 @@ const Nav = () => {
         ) : (
           <>
             {providers && 
-              Object.values(providers).map((provider) => {
+              Object.values(providers).map((provider) => 
                 (
                   <button type="button" key={provider.name}
                   onClick={() => signIn(provider.id)}
@@ -71,13 +71,13 @@ const Nav = () => {
                     Sign In
                   </button>
                 )
-              })
+              )
             }
           </>
         )}
       </div>
 
-        {/* Desktop Navigation */}
+        {/* Mobile Navigation */}
       <div className="sm:hidden flex relative">
         {session?.user ? (
           <div className="flex">
@@ -127,7 +127,7 @@ const Nav = () => {
         ) : (
           <>
             {providers && 
-              Object.values(providers).map((provider) => {
+              Object.values(providers).map((provider) => 
                 (
                   <button type="button" key={provider.name}
                   onClick={() => signIn(provider.id)}
@@ -135,7 +135,7 @@ const Nav = () => {
                     Sign In
                   </button>
                 )
-              })
+              )
             }
           </>
         )}
