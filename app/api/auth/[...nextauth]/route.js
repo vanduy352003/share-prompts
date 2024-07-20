@@ -11,37 +11,39 @@ const handler = NextAuth({
             clientSecret: process.env.GOOGLE_CLIENT_SECRET,
         })
     ],
-    async session({session}) {
-        const sessionUser = await User.findOne({
-            email: session.user.email
-        })
-
-        session.user.id = sessionUser._id.toString();
-
-        return session;
-    },
-    async signIn({profile}) {
-        try {
-            //serverLess -> Lambda -> dynamodb
-            //open only when get call
-            await connectToDB();
-
-            //Check if a user already exists
-            const userExists = await User.findOne({
-                email: profile.email
+    callbacks: {
+        async session({session}) {
+            const sessionUser = await User.findOne({
+                email: session.user.email
             })
-            // if not, create a new user
-            if (!userExists) {
-                await User.create({
-                    email: profile.email,
-                    username: profile.name.replace(" ", "").toLowerCase(),
-                    image: profile.picture
+    
+            session.user.id = sessionUser._id.toString();
+    
+            return session;
+        },
+        async signIn({profile}) {
+            try {
+                //every next js route is serverLess -> Lambda -> dynamodb
+                //open only when get call
+                await connectToDB();
+    
+                //Check if a user already exists
+                const userExists = await User.findOne({
+                    email: profile.email
                 })
+                // if not, create a new user
+                if (!userExists) {
+                    await User.create({
+                        email: profile.email,
+                        username: profile.name.replace(" ", "").toLowerCase(),
+                        image: profile.picture
+                    })
+                }
+                return true;
+            } catch (error) {
+                console.log(error);
+                return false;
             }
-            return true;
-        } catch (error) {
-            console.log(error);
-            return false;
         }
     }
 })
