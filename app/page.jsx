@@ -1,5 +1,12 @@
 import Feed from '@components/Feed';
 
+// Implement Search
+  // Search by prompt
+  // Search by tag
+  // Search by username
+// Implement Click on tag
+  // Search by tag when click appear in search bar
+// Implement View other profiles
 
 const Home = () => {
   return (
