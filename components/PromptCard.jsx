@@ -16,12 +16,21 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
     setTimeout(() => setCopied(""), 3000);
   };
 
+  const handleAvatarClick = (creator) => {
+    console.log(creator)
+
+    if (post.creator._id === session?.user.id) return router.push("/profile");
+
+    router.push(`/profile/${creator._id}?name=${creator.username}`)
+  }
+
   return (
     <div className="prompt_card">
       <div className="flex justify-between items-start gap-5">
         <div
           className="flex-1 flex justify-start
         items-center gap-3 cursor-pointer"
+        onClick={()=>handleAvatarClick(post.creator)}
         >
           <Image
             src={post.creator.image}
