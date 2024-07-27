@@ -2,6 +2,8 @@ import '@styles/globals.css';
 
 import Nav from '@components/Nav';
 import Provider from '@components/Provider';
+import { Suspense } from 'react';
+import EditPrompt from './update-prompt/page';
 export const metadata = {
     title: "Promptopia",
     discription: 'Discover & Share AI Prompts'
